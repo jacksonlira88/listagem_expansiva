@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:primeiro_app/model/contato.dart';
+import 'package:primeiro_app/pages/cadastrar_contato.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
+const String _title = 'Meus contatos';
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  static const String _title = 'Listagem expansiva com Flutter';
 
   // This widget is the root of your application.
   @override
@@ -17,11 +19,37 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        drawer: _drawer(),
-        appBar: AppBar(title: const Text(_title)),
-        body: const MyHomePage(),
+      home: const TelaInicial(),
+      //remover o banner de debug
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class TelaInicial extends StatelessWidget {
+  const TelaInicial({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // ignore: dead_code
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(_title),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CadastrarContato()));
+            },
+            icon: const Icon(Icons.add),
+            tooltip: 'Adicionar contato',
+          )
+        ],
       ),
+      drawer: _drawer(),
+      body: const MyHomePage(),
     );
   }
 }
@@ -124,8 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             body: ListTile(
                 title: Text(contato.nome),
-                subtitle:
-                    const Text('To delete this panel, tap the trash can icon'),
+                subtitle: const Text('Para deletar o item, click na lixeira'),
                 trailing: const Icon(Icons.delete),
                 onTap: () {
                   setState(() {
@@ -138,19 +165,6 @@ class _MyHomePageState extends State<MyHomePage> {
         }).toList());
   }
 }
-
-// Define o contato e seus atributos.
-class Contato {
-  final String nome;
-  final String telefone;
-  final ContatoType tipo;
-  bool isExpanded = false;
-
-  Contato({required this.nome, required this.telefone, required this.tipo});
-}
-
-// Enumera os tipos de contatos
-enum ContatoType { CELULAR, TRABALHO, FAVORITO, CASA }
 
 // Retorna um Icon de acordo com o tipo de contato
 class ContatoHelper {
