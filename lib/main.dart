@@ -18,11 +18,35 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
+        drawer: _drawer(),
         appBar: AppBar(title: const Text(_title)),
         body: const MyHomePage(),
       ),
     );
   }
+}
+
+// cria uma gaveta (drawer) com três itens
+Widget _drawer() {
+  return Drawer(
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        ListTile(
+          title: const Text("Item 1"),
+          onTap: () {},
+        ),
+        ListTile(
+          title: const Text("Item 2"),
+          onTap: () {},
+        ),
+        ListTile(
+          title: const Text("Item 2"),
+          onTap: () {},
+        ),
+      ],
+    ),
+  );
 }
 
 class MyHomePage extends StatefulWidget {
@@ -40,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO: implement initState
     super.initState();
 
-// preenche a lista de contatos inicialmente ou quando muda.
+// preenche a lista de contatos inicialmente.
     contatos.add(
         Contato(nome: 'joao', telefone: '3355-9995', tipo: ContatoType.CASA));
 
@@ -78,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+//Painel que lista os contatos
   Widget _painel() {
     return ExpansionPanelList(
         expansionCallback: (int index, bool isExpanded) {
@@ -114,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+// Define o contato e seus atributos.
 class Contato {
   final String nome;
   final String telefone;
@@ -123,6 +149,7 @@ class Contato {
   Contato({required this.nome, required this.telefone, required this.tipo});
 }
 
+// Enumera os tipos de contatos
 enum ContatoType { CELULAR, TRABALHO, FAVORITO, CASA }
 
 // Retorna um Icon de acordo com o tipo de contato
@@ -140,7 +167,6 @@ class ContatoHelper {
     }
   }
 }
-
 
 // Primeira lista funcional
 
